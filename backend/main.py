@@ -134,22 +134,21 @@ def perform_scan(scan_id: int, repo_path: Path, target_path: str, commit_hash: s
     db = SessionLocal()
     try:
         db_scan = db.query(models.Scan).filter(models.Scan.id == scan_id).first()
-        if not db_scan: 
-            return
-        
         findings = scanner_wrapper.run_scan(repo_path, target_path, commit_hash)
         
         for f in findings:
             db.add(models.Finding(scan_id=scan_id, **f))
         
-        db_scan.status = "завершён"
+        db_scan.status = "completed"
         db_scan.completed_at = func.now()
         db_scan.findings_count = len(findings)
         db.commit()
     except Exception as e:
-        db_scan.status = "ошибка"
-        db_scan.error_message = str(e)
-        db.commit()
+        db_scan = db.query(models.Scan).filter(models.Scan.id == scan_id).first()
+        if db_scan:
+            db_scan.status = "failed"
+            db_scan.error_message = str(e)
+            db.commit()
     finally:
         db.close()
 
