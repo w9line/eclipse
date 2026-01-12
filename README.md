@@ -2,7 +2,7 @@
 
 # ECLIPSE
 
-### Exposure Credential Leak Inspector — Private Secret Explorer
+### EExamine Commit Logs Identify Potential Secret Exposures 
 
 [![Python](https://img.shields.io/badge/Python-3.11+-000?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-000?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
